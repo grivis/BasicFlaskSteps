@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма</title>
+</head>
+<body style="font-family:Arial;" >
+<h1>Пожалуйста, представьтесь!</h1>
+<form>
+    <p>Как к Вам обращаться?</p>
+    <input type="text" name="name" size="20" /> Имя<br>
+    <input type="text" name="lastname" size="20" /> Фамилия<br>
+    <p>Ваш пол?</p>
+    <input type="radio" name="Sex" value = "male" checked="checked" /> Мужчина<br>
+    <input type="radio" name="Sex" value = "female"/> Женщина<br>
+    <p>Нам необходимо знать Ваш возраст</p>
+    <input type="text" name="birth" size="20" /> Год рождения<br>
+    <p>Как c Вами можно связаться?</p>
+    <input type="text" name="phone" size="20" /> Номер телефона<br>
+    <input type="text" name="email" size="20" /> Адрес электронной почты<br>
+    <p>Откуда Вы?</p>
+    <input type="text" name="country" size="20"  /> Страна<br>
+    <input type="text" name="city" size="20" /> Город<br>
+    <h2>Выберите свое любимое блюдо:</h2>
+    <p><select name="food">
+    <optgroup label="Русская кухня">
+     <option value="r1">Закуска Барская</option>
+     <option value="r2">Раки, фаршированные по-царски</option>
+     <option value="r3">Биточки в горшочке</option>
+    </optgroup>
+    <optgroup label="Украинская кухня">
+     <option value="u1">Галушки славянские</option>
+     <option value="u2">Пампушки украинские</option>
+     <option value="u3">Жаркое по-харьковски</option>
+    </optgroup>
+   </select></p>
+    <p>Как часто Вы посещаете наш сайт?</p>
+    <input type="number" size="3" name="num" min="1" max="10" value="1">
+    <h2>Что Вы думаете о нашем сайте?</h2>
+    <p><textarea name="comment" cols="40" rows="6"></textarea></p>
+    <input type="submit" value="Отправить">
+</form>
+<h1>Благодарим за Ваши ответы!</h1>
+</body>
+</html>
