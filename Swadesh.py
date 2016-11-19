@@ -12,8 +12,9 @@ app = Flask(__name__)
 swlst = ['стопа', 'нога', 'колено', 'рука', 'крыло', 'живот', 'внутренности', 'шея',
          'спина', 'грудь', 'сердце', 'печень', 'пить', 'кушать', 'кусать', 'сосать',
          'плевать', 'блевать', 'дуть', 'дышать']
-months = ['января', 'февраля', 'марта','апреля','мая',
-            'июня','июля','августа','сентября','октября','ноября','декабря']
+months = ['января', 'февраля', 'марта', 'апреля', 'мая',
+          'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+
 
 @app.route('/')
 def form():
@@ -25,14 +26,14 @@ def form():
     hourNow = str(lt.tm_hour)
     minNow = str(lt.tm_min)
     # Дни, месяцы, часы, минуты должны быть двузначными
-    if len(ddNow)<2:
-        ddNow = '0'+ddNow
-    if len(mmNow)<2:
-        mmNow = '0'+mmNow
-    if len(hourNow)<2:
-        hourNow = '0'+hourNow
-    if len(minNow)<2:
-        minNow = '0'+minNow
+    if len(ddNow) < 2:
+        ddNow = '0' + ddNow
+    if len(mmNow) < 2:
+        mmNow = '0' + mmNow
+    if len(hourNow) < 2:
+        hourNow = '0' + hourNow
+    if len(minNow) < 2:
+        minNow = '0' + minNow
     # Cловарь для хранения результатов анкеты
     swdic = {}
     # Чтение анкеты и заполнение словаря
@@ -63,9 +64,9 @@ def form():
         pickle.dump(swdic, f)
         f.close()
         return render_template('thanks.html')
-    return render_template('swform.html', sw0=swlst[0], sw1=swlst[1],sw2=swlst[2],sw3=swlst[3],sw4=swlst[4],
-                           sw5=swlst[5],sw6=swlst[6],sw7=swlst[7],sw8=swlst[8],sw9=swlst[9],sw10=swlst[10],
-                           sw11=swlst[11],sw12=swlst[12],sw13=swlst[13],sw14=swlst[14],
+    return render_template('swform.html', sw0=swlst[0], sw1=swlst[1], sw2=swlst[2], sw3=swlst[3], sw4=swlst[4],
+                           sw5=swlst[5], sw6=swlst[6], sw7=swlst[7], sw8=swlst[8], sw9=swlst[9], sw10=swlst[10],
+                           sw11=swlst[11], sw12=swlst[12], sw13=swlst[13], sw14=swlst[14],
                            sw15=swlst[15], sw16=swlst[16], sw17=swlst[17], sw18=swlst[18], sw19=swlst[19])
 
 
@@ -93,7 +94,7 @@ def stats():
     today = mmNow + ddNow
     langset = set()
     for file in glob.glob("swdic*.dic"):
-        count = count + 1
+        count += 1
         f = open(file, 'rb')
         dic = pickle.load(f)
         if file[5:9] == today:
@@ -102,7 +103,8 @@ def stats():
             cthishour += 1
         langset.add(dic['language'])
         f.close()
-    return render_template('stats.html', day=ddNow, month=months[int(mmNow)-1], hour=hourNow, minute=minNow, count=count, ctoday=ctoday, cthishour=cthishour, clang=len(langset))
+    return render_template('stats.html', day=ddNow, month=months[int(mmNow) - 1], hour=hourNow, minute=minNow,
+                           count=count, ctoday=ctoday, cthishour=cthishour, clang=len(langset))
 
 
 @app.route('/json')
