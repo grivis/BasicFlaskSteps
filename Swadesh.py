@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import url_for, render_template, request, redirect
+from flask import render_template, request
 from time import *
 import pickle
 import glob, os
@@ -19,7 +19,6 @@ def form():
     lt = localtime(ticks)
     ddNow = str(lt.tm_mday)
     mmNow = str(lt.tm_mon)
-    yyyyNow = str(lt.tm_year)
     hourNow = str(lt.tm_hour)
     minNow = str(lt.tm_min)
     # Дни, месяцы, часы, минуты должны быть двузначными
