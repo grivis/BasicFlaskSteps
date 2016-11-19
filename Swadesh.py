@@ -24,13 +24,13 @@ def form():
     minNow = str(lt.tm_min)
     # Дни, месяцы, часы, минуты должны быть двузначными
     if len(ddNow)<2:
-        ddnow = '0'+ddNow
+        ddNow = '0'+ddNow
     if len(mmNow)<2:
-        ddnow = '0'+mmNow
+        mmNow = '0'+mmNow
     if len(hourNow)<2:
-        ddnow = '0'+hourNow
+        hourNow = '0'+hourNow
     if len(minNow)<2:
-        ddnow = '0'+minNow
+        minNow = '0'+minNow
     # Cловарь для хранения результатов анкеты
     swdic = {}
     # Чтение анкеты и заполнение словаря
@@ -76,19 +76,18 @@ def stats():
     mmNow = str(lt.tm_mon)
     # Дни, месяцы, часы, минуты должны быть двузначными
     if len(ddNow) < 2:
-        ddnow = '0' + ddNow
+        ddNow = '0' + ddNow
     if len(mmNow) < 2:
-        ddnow = '0' + mmNow
+        mmNow = '0' + mmNow
     if len(hourNow) < 2:
-        ddnow = '0' + hourNow
+        hourNow = '0' + hourNow
     if len(minNow) < 2:
-        ddnow = '0' + minNow
+        minNow = '0' + minNow
     os.chdir("./")
     count = 0
     ctoday = 0
     cthishour = 0
     today = mmNow + ddNow
-    cvillage = 0
     langset = set()
     for file in glob.glob("swdic*.dic"):
         count = count + 1
