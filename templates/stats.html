@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Cтатистика</title>
+    <style>
+        table, th, td {
+        border: 2px solid #381c76;
+        border-collapse: collapse;}
+        th, td {
+        padding: 15px;}
+    </style>
+</head>
+<body style="font-family:Arial;">
+<h1 style="color:#381c76">Статистика заполненных анкет</h1>
+<h2 style="color:#381c76">На {{ day }} {{ month }}, {{ hour }}:{{ minute }}</h2>
+<p></p>
+<table style="width:50%">
+    <tr><td>Всего анкет:</td><td>{{ count }}</td></tr>
+    <tr><td>Заполнено сегодня:</td><td>{{ ctoday }}</td></tr>
+    <tr><td>Заполнено в этом часе:</td><td>{{ cthishour }}</td></tr>
+    <tr><td>Различных языков:</td><td>{{ clang }}</td></tr>
+<table>
+</body>
+</html>
