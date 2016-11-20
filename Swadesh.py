@@ -1,3 +1,15 @@
+'''
+Программа реализует анкетирование по 20 словам из списка Сводеша.
+Дополнительно к программе необходимы HTML файлы в папке templates
+swform.html thanks.html search.html stats.html
+Реализованы страницы:
+<hostname:port>/ - сама анкета
+<hostname:port>/stats - статистика по анкетам
+<hostname:port>/search - поиск по анкетам и результаты поиска
+<hostname:port>/json - вывод данных всех анкет в формате JSON
+'''
+
+# Импортируем нужные нам модули
 from flask import Flask
 from flask import render_template, request
 from time import *
@@ -7,11 +19,13 @@ import json
 
 app = Flask(__name__)
 
+# Две выборки из списка Сводеша для русского языка
 # swlst = ['грудь','сердце','печень','пить','кушать','кусать','видеть','слышать','знать','спать','умирать',
 #          'убивать','плавать', 'летать','гулять','приходить','лежать','сидеть','стоять', 'дать']
 swlst = ['стопа', 'нога', 'колено', 'рука', 'крыло', 'живот', 'внутренности', 'шея',
          'спина', 'грудь', 'сердце', 'печень', 'пить', 'кушать', 'кусать', 'сосать',
          'плевать', 'блевать', 'дуть', 'дышать']
+# Названия месяцев для вывода на страницу статистики
 months = ['января', 'февраля', 'марта', 'апреля', 'мая',
           'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
 
@@ -60,10 +74,13 @@ def form():
         swdic[swlst[17]] = request.args['wrd17']
         swdic[swlst[18]] = request.args['wrd18']
         swdic[swlst[19]] = request.args['wrd19']
+        # Имя файла формируется по шаблону с учетом месяца, дня, часа и минуты
+        # Один файл хранит одну заполненную анкету
         f = open('swdic' + mmNow + ddNow + hourNow + minNow + '.dic', 'wb')
         pickle.dump(swdic, f)
         f.close()
         return render_template('thanks.html')
+    # В шаблон HTML передаются сами слова из списка Сводеша
     return render_template('swform.html', sw0=swlst[0], sw1=swlst[1], sw2=swlst[2], sw3=swlst[3], sw4=swlst[4],
                            sw5=swlst[5], sw6=swlst[6], sw7=swlst[7], sw8=swlst[8], sw9=swlst[9], sw10=swlst[10],
                            sw11=swlst[11], sw12=swlst[12], sw13=swlst[13], sw14=swlst[14],
@@ -72,6 +89,7 @@ def form():
 
 @app.route('/stats')
 def stats():
+    # Статистика по заполненным анкетам
     ticks = time()
     lt = localtime(ticks)
     hourNow = str(lt.tm_hour)
@@ -109,6 +127,7 @@ def stats():
 
 @app.route('/search')
 def searchform():
+    # Поиск по анкетам - выбрать одно слова из выпадающего меню
     # HTML текст, который надо выводить в браузер
     ResultHTML =   '''
         <!DOCTYPE html>
@@ -145,7 +164,7 @@ def searchform():
 
 
     if request.args:
-        # Выбор пользователя
+        # Выбор слова для подбора вариантов
         searchindex = request.args['searchword']
         searchword = swlst[int(searchindex)]
         # Обход имеющихся анкет
@@ -162,6 +181,7 @@ def searchform():
             f.close()
 
         # Выдаем результат в виде HTML документа, в который вставлена таблица результатов поиска
+        # Шаблон HTML для результатов не готовится заранее в виде файла, формируется на лету
         return ResultHTML + resultstring + ResultHTMLEnd
     # вновь возвращаем исходную форму, если не выбран предмет поиска
     return render_template('search.html', sw0=swlst[0], sw1=swlst[1], sw2=swlst[2], sw3=swlst[3], sw4=swlst[4],
@@ -184,6 +204,7 @@ def jsonout():
     json_string = json.dumps(alldicts)
     return json_string
 
+# Вот, собственно, и все!
 
 if __name__ == '__main__':
     app.run(debug=True)
