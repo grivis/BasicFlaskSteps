@@ -107,6 +107,70 @@ def stats():
                            count=count, ctoday=ctoday, cthishour=cthishour, clang=len(langset))
 
 
+@app.route('/search')
+def searchform():
+    # HTML текст, который надо выводить в браузер
+    ResultHTML =   '''
+        <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Результаты поиска</title>
+        <style>
+        table, th, td {
+        border: 2px solid #381c76;
+        border-collapse: collapse;}
+        th, td {
+        padding: 15px;}
+    </style>
+    </head>
+    <body style="font-family:Arial;">
+    <h1 style="color:#381c76">Значения выбранного слова:</h1>
+
+    <p></p>
+    <table style="width:50%">
+      <tr>
+        <th>Респондент</th>
+        <th>Язык</th>
+        <th>Значение слова</th>
+      </tr>
+    '''
+    # Окончание HTML текста
+    ResultHTMLEnd = '''
+    </table>
+    <p style="color:#381c76">Благодарим за использование нашего сервиса!</p>
+    </body>
+    </html>
+        '''
+
+
+    if request.args:
+        # Выбор пользователя
+        searchindex = request.args['searchword']
+        searchword = swlst[int(searchindex)]
+        # Обход имеющихся анкет
+        os.chdir("./")
+        resultstring = ''
+        for file in glob.glob("swdic*.dic"):
+            f = open(file, 'rb')
+            dic = pickle.load(f)
+            word = dic.get(searchword, '---')
+            language = dic.get('language', '---')
+            responder = dic.get('name', '---')
+            resultstring += '<tr>'+'<td>'+responder+'</td>' \
+                             +'<td>'+language+'<td>'+word+'</td>'+'</tr>'+'\n '
+            f.close()
+
+        # Выдаем результат в виде HTML документа, в который вставлена таблица результатов поиска
+        return ResultHTML + resultstring + ResultHTMLEnd
+    # вновь возвращаем исходную форму, если не выбран предмет поиска
+    return render_template('search.html', sw0=swlst[0], sw1=swlst[1], sw2=swlst[2], sw3=swlst[3], sw4=swlst[4],
+                           sw5=swlst[5], sw6=swlst[6], sw7=swlst[7], sw8=swlst[8], sw9=swlst[9], sw10=swlst[10],
+                           sw11=swlst[11], sw12=swlst[12], sw13=swlst[13], sw14=swlst[14],
+                           sw15=swlst[15], sw16=swlst[16], sw17=swlst[17], sw18=swlst[18], sw19=swlst[19])
+
+
+
 @app.route('/json')
 def jsonout():
     # Выводим все анкеты в виде JSON
